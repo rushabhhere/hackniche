@@ -1,0 +1,21 @@
+{
+  "name": "hackniche",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:rushabhhere/hackniche.git",
+  "author": "Rushabh Javeri <javeri.rushabh45@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dockerode": "^4.0.2",
+    "express": "^4.18.2",
+    "pusher": "^5.2.0",
+    "socket.io": "^4.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js"
+  }
+}

@@ -1,7 +1,8 @@
-const express = require('express');
-const Docker = require('dockerode');
-const cors = require('cors');
-const os = require('os');
+import express from 'express';
+import Docker from 'dockerode';
+import cors from 'cors';
+import { totalmem } from 'os';
+import { startLogStream, startStatsStream } from './src/events.js';
 
 const app = express();
 const port = 5500;
@@ -32,7 +33,7 @@ app.get('/basic-info', async (req, res) => {
       totalContainers: containers.length,
       runningContainers: runningContainers.length,
       stoppedContainers: stoppedContainers.length,
-      ram: os.totalmem() / 1024 / 1024 / 1024,
+      ram: totalmem() / 1024 / 1024 / 1024,
       cpus: info.NCPU,
     });
   } catch (err) {
@@ -98,3 +99,27 @@ app.get('/containers/stats/:containerId', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+app.get('/containers/logs/:containerId', async (req, res) => {
+  const { containerId } = req.params;
+
+  try {
+    startLogStream(containerId);
+    res.send(200);
+  } catch (err) {
+    console.error('Error fetching container logs:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
+app.get('/containers/stats/:containerId', async (req, res) => {
+  const { containerId } = req.params;
+
+  try {
+    startStatsStream(containerId);
+    res.send(200);
+  } catch (err) {
+    console.error('Error fetching container stats:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})

@@ -3,9 +3,9 @@ import { prisma } from "@/lib/db";
 export default async function handler(req, res) {
   const { agent } = req.query;
 
-  const { ip, port } = await prisma.agents.findUnique({
+  const { ip, port } = await prisma.agent.findUnique({
     where: {
-      id: parseInt(agent),
+      id: agent,
     },
   });
 

@@ -7,20 +7,20 @@ export default function InputDemo() {
   const ipRef = useRef();
   const portRef = useRef();
   function handleSubmit() {
-    alert("Yaha aaya");
+    // alert("Yaha aaya");
 
-    const ip = ipRef.current?.value;
-    const ipRegex = / ^(?:[0-9]{1-3}.){3}[0-9]{1-3}$/;
-    const regexPass = ipRegex.test(ip);
-    if (!regexPass) alert("Enter valid IP address");
-    else {
-      const data = {
-        name: nameRef.current?.value,
-        ip: ipRef.current?.value,
-        port: portRef.current?.value,
-      };
-      console.log(data);
-    }
+    const data = {
+      name: nameRef.current?.value,
+      ip: ipRef.current?.value,
+      port: portRef.current?.value,
+    };
+
+    console.log(data);
+
+    fetch(`/api/agent/create`, {
+      method: "post",
+      body: JSON.stringify(data) 
+    })
   }
   return (
     <div className=" justify-center items-center h-screen  flex flex-col gap-4">

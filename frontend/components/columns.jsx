@@ -20,7 +20,7 @@ import { useState } from "react";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const columns = [
+export const containerColumns = [
   {
     id: "select",
     header: ({ table }) => (
@@ -108,7 +108,7 @@ export const columns = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Status
+            State
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
           {/* <div className="flex items-center py-4">
@@ -124,20 +124,7 @@ export const columns = [
         </>
       );
     },
-    cell: ({ row }) => {
-      const status = row.getValue("status");
-      return (
-        <div className="">
-          <p
-            className={`${
-              status === "running" ? "bg-green-400" : "bg-red-500"
-            }  rounded-full py-1 w-32 text-center capitalize `}
-          >
-            {status}
-          </p>
-        </div>
-      );
-    },
+   
     filterable: true,
   },
   {
@@ -148,9 +135,23 @@ export const columns = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          State
+          Status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const status = row.getValue("state");
+      return (
+        <div className="">
+          <p
+            className={`${
+              status === "running" ? "bg-green-400" : "bg-red-500"
+            }  rounded-full py-1 w-32 text-center capitalize `}
+          >
+            {status}
+          </p>
+        </div>
       );
     },
   },
@@ -211,3 +212,4 @@ export const columns = [
     },
   },
 ];
+

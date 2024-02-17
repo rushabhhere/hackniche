@@ -56,6 +56,9 @@ export const containerColumns = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      return <>{row.getValue("id").substring(0, 12)}</>;
+    },
   },
   {
     accessorKey: "name",
@@ -111,20 +114,25 @@ export const containerColumns = [
             State
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
-          {/* <div className="flex items-center py-4">
-            <Input
-              placeholder="Filter emails..."
-              value={table.getColumn("email")?.getFilterValue() ?? ""}
-              onChange={(event) =>
-                table.getColumn("email")?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-            />
-          </div> */}
         </>
       );
     },
-   
+    cell: ({ row }) => {
+      const status = row.getValue("status");
+      const state = row.getValue("state");
+      return (
+        <div className="">
+          <p
+            className={`${
+              state === "running" ? "text-green-400" : "text-red-500"
+            }  rounded-full py-1 w-32 text-center capitalize `}
+          >
+            {status}
+          </p>
+        </div>
+      );
+    },
+
     filterable: true,
   },
   {
@@ -182,6 +190,17 @@ export const containerColumns = [
         </Button>
       );
     },
+    cell: ({ row }) => {
+      const timestamp = row.getValue("created");
+      return (
+        <div className="">
+          {new Date(timestamp * 1000).toLocaleString("en-IN", {
+            dateStyle: "short",
+            timeStyle: "medium",
+          })}
+        </div>
+      );
+    },
   },
   {
     id: "actions",
@@ -212,4 +231,3 @@ export const containerColumns = [
     },
   },
 ];
-

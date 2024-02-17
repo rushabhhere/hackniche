@@ -1,4 +1,3 @@
-"use client";
 
 import {
   ColumnDef,
@@ -33,7 +32,7 @@ import { Input } from "@/components/ui/input";
 
 import Pusher from "pusher-js";
 
-export function DataTable({ columns, data }) {
+export default function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -59,12 +58,9 @@ export function DataTable({ columns, data }) {
     },
   });
 
-
-
   return (
     <div>
       <div className="flex items-center py-4">
-       
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

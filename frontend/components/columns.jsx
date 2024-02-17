@@ -44,6 +44,20 @@ export const columns = [
     enableHiding: false,
   },
   {
+    accessorKey: "id",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
@@ -86,7 +100,7 @@ export const columns = [
     },
   },
   {
-    accessorKey: "state",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <>
@@ -94,7 +108,7 @@ export const columns = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            State
+            Status
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
           {/* <div className="flex items-center py-4">
@@ -111,22 +125,35 @@ export const columns = [
       );
     },
     cell: ({ row }) => {
-      const state = row.getValue("state");
+      const status = row.getValue("status");
       return (
         <div className="">
           <p
             className={`${
-              state === "running" ? "bg-green-400" : "bg-red-500"
+              status === "running" ? "bg-green-400" : "bg-red-500"
             }  rounded-full py-1 w-32 text-center capitalize `}
           >
-            {state}
+            {status}
           </p>
         </div>
       );
     },
     filterable: true,
   },
-
+  {
+    accessorKey: "state",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          State
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
   {
     accessorKey: "image",
     header: ({ column }) => {

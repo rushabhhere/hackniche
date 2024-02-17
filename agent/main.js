@@ -1,26 +1,51 @@
 const express = require('express');
 const Docker = require('dockerode');
 const cors = require('cors');
+const os = require('os');
 
 const app = express();
-const port = 3000;
+const port = 5500;
 
 app.use(cors());
 
 const docker = new Docker();
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'UP' });
+});
+
+app.get('/basic-info', async (req, res) => {
+  // return total number of containers, number of running containers, number of stopped containers
+  // return total system ram and cpu cores
+  try {
+    const containers = await docker.listContainers({ all: true });
+    const info = await docker.info();
+
+    const runningContainers = containers.filter(
+      container => container.State === 'running'
+    );
+    const stoppedContainers = containers.filter(
+      container => container.State === 'exited'
+    );
+
+    res.json({
+      totalContainers: containers.length,
+      runningContainers: runningContainers.length,
+      stoppedContainers: stoppedContainers.length,
+      ram: os.totalmem() / 1024 / 1024 / 1024,
+      cpus: info.NCPU,
+    });
+  } catch (err) {
+    console.error('Error fetching basic info:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/containers/status', async (req, res) => {
   try {
-    const containers = await docker.listContainers({ all: true }); // Fetch all containers
+    const containers = await docker.listContainers({ all: true });
 
     const containerStatus = containers.map(container => {
-      docker
-        .getContainer(container.Id)
-        .stats({ stream: false })
-        .then(data => {
-          console.log(data);
-        });
-
       return {
         id: container.Id,
         name: container.Names[0],
@@ -35,6 +60,37 @@ app.get('/containers/status', async (req, res) => {
     res.json(containerStatus); // Send container status as JSON response
   } catch (err) {
     console.error('Error fetching container status:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/containers/stats/:containerId', async (req, res) => {
+  const { containerId } = req.params;
+
+  try {
+    const container = docker.getContainer(containerId);
+
+    const stats = await container.stats({ stream: false });
+
+    const cpuUsage =
+      stats.cpu_stats.cpu_usage.usage_in_usermode +
+      stats.cpu_stats.cpu_usage.usage_in_kernelmode;
+    const systemUsage = stats.cpu_stats.system_cpu_usage;
+    const cpuPercent = (cpuUsage / systemUsage) * 100;
+
+    const memoryUsage = stats.memory_stats.usage;
+    const memoryLimit = stats.memory_stats.limit;
+    const memoryPercent = (memoryUsage / memoryLimit) * 100;
+
+    const networkStats = stats.networks;
+
+    res.json({
+      cpuPercent,
+      memoryPercent,
+      networkStats,
+    });
+  } catch (err) {
+    console.error('Error fetching container stats:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

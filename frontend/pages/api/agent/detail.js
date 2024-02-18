@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   const { name, ip, port } = await prisma.agent.findUnique({
     where: {
-      id: parseInt(agent),
+      id: agent,
     },
   });
 

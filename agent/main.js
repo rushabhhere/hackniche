@@ -3,7 +3,7 @@ import Docker from 'dockerode';
 import cors from 'cors';
 import { totalmem } from 'os';
 import { startLogStream, startStatsStream } from './src/events.js';
-import "dotenv/config"
+import 'dotenv/config';
 
 const app = express();
 const port = 5500;
@@ -50,11 +50,14 @@ app.get('/containers/status', async (req, res) => {
     const containerStatus = containers.map(container => {
       return {
         id: container.Id,
-        name: container.Names[0],
+        name: container.Names[0].replace('/', ''),
         image: container.Image,
         state: container.State,
         status: container.Status,
-        ports: container.Ports,
+        ports:
+          container.Ports.length > 0
+            ? `${container.Ports[0].PublicPort}:${container.Ports[0].PrivatePort}`
+            : '-',
         created: container.Created,
       };
     });
@@ -111,7 +114,7 @@ app.get('/containers/logs/:containerId', async (req, res) => {
     console.error('Error fetching container logs:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-})
+});
 
 app.get('/containers/stats/:containerId', async (req, res) => {
   const { containerId } = req.params;
@@ -123,7 +126,7 @@ app.get('/containers/stats/:containerId', async (req, res) => {
     console.error('Error fetching container stats:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-})
+});
 
 app.post('/containers/start/:containerId', async (req, res) => {
   const { containerId } = req.params;
@@ -135,9 +138,7 @@ app.post('/containers/start/:containerId', async (req, res) => {
     console.error('Error fetching container stats:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-
-})
-
+});
 
 app.post('/containers/stop/:containerId', async (req, res) => {
   const { containerId } = req.params;
@@ -149,5 +150,4 @@ app.post('/containers/stop/:containerId', async (req, res) => {
     console.error('Error fetching container stats:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
-
-})
+});

@@ -61,4 +61,12 @@ class AgentProvider extends ChangeNotifier {
     await getContainersForAgent(agent);
     notifyListeners();
   }
+
+  void getContainerStats(AgentModel agent, String containerId) async {
+    Map<String, dynamic> stats = await _containerController.getContainerStats(agent.ip, agent.port, containerId);
+    _agents.firstWhere((element) => element.id == agent.id).containers
+        ?.firstWhere((element) => element.id == containerId)
+        .stats = stats;
+    notifyListeners();
+  }
 }

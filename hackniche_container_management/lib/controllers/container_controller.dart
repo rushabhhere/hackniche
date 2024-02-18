@@ -19,4 +19,8 @@ class ContainerController {
   void stopContainer(String ip, int port, String containerId) {
     containerRepository.stopContainer(ip, port, containerId);
   }
+
+  Future<Map<String, dynamic>> getContainerStats(String ip, int port, String containerId) async {
+    return await containerRepository.getContainerStats(ip, port, containerId);
+  }
 }

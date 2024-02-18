@@ -35,4 +35,14 @@ class ContainerRepository {
   void stopContainer(String ip, int port, String containerId) {
     dioService.post("http://$ip:$port/containers/stop/$containerId", {});
   }
+
+  Future<Map<String, dynamic>> getContainerStats(String ip, int port, String containerId) async {
+    try {
+      final response = await dioService
+          .get("http://$ip:$port/containers/stats/$containerId", {});
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

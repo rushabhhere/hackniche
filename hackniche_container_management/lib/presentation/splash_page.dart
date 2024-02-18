@@ -31,7 +31,26 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/logo.jpeg'),
+                  radius: 100.0,
+                ),
+              ),
+              Text(
+                'DockerSensei',
+                style: TextStyle(
+                  fontSize: 24.0,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

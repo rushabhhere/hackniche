@@ -41,6 +41,7 @@ class _ContainersPageState extends State<ContainersPage> {
           'Containers for ${widget.agent.name}',
           overflow: TextOverflow.ellipsis,
         ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(

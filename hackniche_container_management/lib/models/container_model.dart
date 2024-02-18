@@ -9,8 +9,9 @@ class ContainerModel {
   late String status;
   late DateTime createdAt;
   late String image;
-  late List<PortModel> ports;
+  late String ports;
   late List<String> logs = [];
+  late Map<String, dynamic> stats = {};
 
   ContainerModel({
     required this.id,
@@ -25,14 +26,12 @@ class ContainerModel {
   ContainerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    state = ContainerStateEnum.values
-        .firstWhere((e) => e.toString() == 'ContainerStateEnum.${json['state']}');
+    state = ContainerStateEnum.values.firstWhere(
+        (e) => e.toString() == 'ContainerStateEnum.${json['state']}');
     status = json['status'];
-    createdAt = DateTime.fromMillisecondsSinceEpoch(json['created']~/1000);
+    createdAt = DateTime.fromMillisecondsSinceEpoch(json['created'] ~/ 1000);
     image = json['image'];
-    ports = (json['ports'] as List)
-        .map((port) => PortModel.fromJson(port))
-        .toList();
+    ports = json['ports'];
   }
 
   Map toJson() {
@@ -43,7 +42,7 @@ class ContainerModel {
       'status': status,
       'created': createdAt.toIso8601String(),
       'image': image,
-      'ports': ports.map((port) => port.toJson()).toList()
+      'ports': ports,
     };
   }
 }

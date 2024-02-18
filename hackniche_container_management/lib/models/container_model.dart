@@ -10,6 +10,7 @@ class ContainerModel {
   late DateTime createdAt;
   late String image;
   late List<PortModel> ports;
+  late List<String> logs = [];
 
   ContainerModel({
     required this.id,

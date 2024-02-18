@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hackniche_container_management/presentation/splash_page.dart';
+import 'package:hackniche_container_management/providers/agent_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-
-import 'providers/container_provider.dart';
-import 'providers/logs_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,14 +19,11 @@ class RootApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => LogsProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ContainerProvider(),
+          create: (context) => AgentProvider(),
         ),
       ],
       child: MaterialApp(
-        title: 'Container Management System',
+        title: 'DockerSensei',
         theme: ThemeData(
           brightness: Brightness.dark,
           textTheme: GoogleFonts.interTextTheme().apply(

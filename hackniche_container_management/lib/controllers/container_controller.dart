@@ -4,7 +4,19 @@ import 'package:hackniche_container_management/repositories/container_repository
 class ContainerController {
   ContainerRepository containerRepository = ContainerRepository();
 
-  Future<List<ContainerModel>> getAllContainers() async {
-    return await containerRepository.getAllContainers();
+  Future<List<ContainerModel>> getAllContainers(String ip, int port) async {
+    return await containerRepository.getAllContainers(ip, port);
+  }
+
+  Future<void> activateLogs(String ip, int port, String containerId) async {
+    await containerRepository.activateLogs(ip, port, containerId);
+  }
+
+  void startContainer(String ip, int port, String containerId) {
+    containerRepository.startContainer(ip, port, containerId);
+  }
+
+  void stopContainer(String ip, int port, String containerId) {
+    containerRepository.stopContainer(ip, port, containerId);
   }
 }

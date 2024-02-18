@@ -1,8 +1,8 @@
-import { containerColumns } from "@/components/columns";
-import DataTable from "@/components/data-table";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { containerColumns } from '@/components/columns';
+import DataTable from '@/components/data-table';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function DemoPage() {
   //   const data = fetch('/api/container');
@@ -17,21 +17,22 @@ export default function DemoPage() {
 
     const { agent } = router.query;
 
-    fetch(`/api/agent/containers?agent=${agent}`)
-      .then((res) => res.json())
-      .then((data) => setData(data));
-    // fetch('/api/agents').then(res => res.json()).then(data => setAgents(data))
-    // fetch("/api/agents").then(console.log);
+    const interval = setInterval(() => {
+      fetch(`/api/agent/containers?agent=${agent}`)
+        .then(res => res.json())
+        .then(data => setData(data));
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, [router.isReady]);
-  
 
   return (
     <>
-      <h1 className="text-gray-200 text-4xl text-center my-4 font-bold">
+      <h1 className="my-4 text-4xl font-bold text-center text-gray-200">
         DockerSensei
       </h1>
-      <div className="container mx-auto py-10">
-        <h1 className="text-gray-200 text-2xl font-bold">Containers</h1>
+      <div className="container py-10 mx-auto">
+        <h1 className="text-2xl font-bold text-gray-200">Containers</h1>
         <DataTable columns={containerColumns} data={data} />
       </div>
     </>

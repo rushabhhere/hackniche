@@ -3,6 +3,7 @@ import Docker from 'dockerode';
 import cors from 'cors';
 import { totalmem } from 'os';
 import { startLogStream, startStatsStream } from './src/events.js';
+import "dotenv/config"
 
 const app = express();
 const port = 5500;
@@ -122,4 +123,31 @@ app.get('/containers/stats/:containerId', async (req, res) => {
     console.error('Error fetching container stats:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
+})
+
+app.post('/containers/start/:containerId', async (req, res) => {
+  const { containerId } = req.params;
+
+  try {
+    const container = docker.getContainer(containerId);
+    container.start();
+  } catch (err) {
+    console.error('Error fetching container stats:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+})
+
+
+app.post('/containers/stop/:containerId', async (req, res) => {
+  const { containerId } = req.params;
+
+  try {
+    const container = docker.getContainer(containerId);
+    container.start();
+  } catch (err) {
+    console.error('Error fetching container stats:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
 })

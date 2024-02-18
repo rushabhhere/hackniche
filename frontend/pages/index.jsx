@@ -30,9 +30,12 @@ export default function Page() {
           <p className="text-white">Loading...</p>
         </div>
       )}
-      <h1 className="mt-4 text-4xl font-bold text-center text-gray-200">
-        DockerSensei
-      </h1>
+
+      <Link href="/">
+        <h1 className="mt-4 text-4xl font-bold text-center text-gray-200">
+          DockerSensei
+        </h1>
+      </Link>
 
       <div className="container py-10 mx-auto">
         <h1 className="text-2xl font-bold text-gray-200">Agents</h1>

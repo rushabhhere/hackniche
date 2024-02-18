@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
+import Link from 'next/link';
 
 export default function InputDemo() {
   const nameRef = useRef();
@@ -37,6 +38,11 @@ export default function InputDemo() {
 
   return (
     <>
+      <Link href="/">
+        <h1 className="mt-4 text-4xl font-bold text-center text-gray-200">
+          DockerSensei
+        </h1>
+      </Link>
       <Toaster richColors />
       <div className="flex flex-col items-center justify-center h-screen gap-4 ">
         <div className="flex flex-col gap-4 p-6 border-2 border-gray-200 rounded-md">

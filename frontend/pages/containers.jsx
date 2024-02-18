@@ -1,5 +1,6 @@
 import { containerColumns } from '@/components/columns';
 import DataTable from '@/components/data-table';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -28,9 +29,11 @@ export default function DemoPage() {
 
   return (
     <>
-      <h1 className="my-4 text-4xl font-bold text-center text-gray-200">
-        DockerSensei
-      </h1>
+      <Link href="/">
+        <h1 className="mt-4 text-4xl font-bold text-center text-gray-200">
+          DockerSensei
+        </h1>
+      </Link>
       <div className="container py-10 mx-auto">
         <h1 className="text-2xl font-bold text-gray-200">Containers</h1>
         <DataTable columns={containerColumns} data={data} />

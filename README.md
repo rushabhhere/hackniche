@@ -12,3 +12,7 @@ DockerSensei has been developed as part of HackNiche 2.0 Hackathon by Team Kirei
 - **Container Events**: Stay informed about important container lifecycle events, including start, stop, and restart events.
 - **User-Friendly Interface**: DockerSensei provides an intuitive web-based dashboard for visualizing and interacting with the monitoring data.
 - **Alerting and Notifications**: [Coming Soon] Receive alerts and notifications based on predefined rules or detected anomalies, enabling proactive issue resolution.
+
+## Architecture
+
+![architecture](https://github.com/rushabhhere/hackniche/assets/73743535/1757dd96-73a2-40c4-8d01-c8c2b09640ac)

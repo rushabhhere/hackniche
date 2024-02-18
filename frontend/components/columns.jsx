@@ -17,6 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -220,8 +221,11 @@ export const containerColumns = [
   {
     id: 'detail-link',
     cell: ({ row }) => {
+      const router = useRouter();
+      const { agent } = router.query;
+
       return (
-        <Link href={`/containers/${row.getValue('id')}`}>
+        <Link href={`/containers/${row.getValue('id')}?agent=${agent}`}>
           <Button variant="ghost" className="w-8 h-8 p-0">
             <span className="sr-only">Open detailed page</span>
             <ExternalLink className="w-4 h-4" />
@@ -229,5 +233,7 @@ export const containerColumns = [
         </Link>
       );
     },
+    enableSorting: false,
+    enableHiding: false,
   },
 ];

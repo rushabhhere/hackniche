@@ -1,7 +1,6 @@
 import { containerColumns } from '@/components/columns';
 import DataTable from '@/components/data-table';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 

@@ -144,7 +144,7 @@ app.post('/containers/stop/:containerId', async (req, res) => {
 
   try {
     const container = docker.getContainer(containerId);
-    container.start();
+    container.stop();
   } catch (err) {
     console.error('Error fetching container stats:', err);
     res.status(500).json({ error: 'Internal server error' });
